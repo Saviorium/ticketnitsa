@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/ticketnitsa
+    username: ticketnitsa_user
+    password: AeOWNi4VryA6WIOHJdki
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: true
+    properties.hibernate.format_sql: true
+spring.jpa.generate-ddl: true
+spring.jpa.hibernate.ddl-auto: create
+logging.level.org.hibernate.type: trace
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation: true
