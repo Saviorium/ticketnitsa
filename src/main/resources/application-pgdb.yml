@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/ticketnitsa
+    username: ticketnitsa_user
+    password: AeOWNi4VryA6WIOHJdki
+    driver-class-name: org.postgresql.Driver

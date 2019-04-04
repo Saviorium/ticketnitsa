@@ -6,14 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.saviorium.ticketnitsa.dao.ProjectRepository;
 import ru.saviorium.ticketnitsa.dao.TicketRepository;
 import ru.saviorium.ticketnitsa.model.Project;
 import ru.saviorium.ticketnitsa.model.Ticket;
 
 import javax.validation.Valid;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
@@ -22,15 +24,13 @@ import java.util.List;
 public class TicketController {
     @Autowired
     private TicketRepository ticketRepo;
+    @Autowired
+    private ProjectRepository projectRepo;
 
     @GetMapping("/create")
     public String createTicketForm(Model model) {
-        List<Project> projects = Arrays.asList(
-                new Project("JAVA", "Java dev", ""),
-                new Project("MUSIC", "Learning music", ""),
-                new Project("BUY", "Purchases", "")
-        );
-
+        List<Project> projects = new LinkedList<>();
+        projectRepo.findAll().forEach(i -> projects.add(i));
         model.addAttribute("projects", projects);
         model.addAttribute("ticket", new Ticket());
         return "createTicketForm";
@@ -44,6 +44,13 @@ public class TicketController {
         }
         ticketRepo.save(ticket);
 
-        return "redirect:/";
+        return "redirect:/ticket/show/" + ticket.getProject();
+    }
+
+    @GetMapping("/show/{projectId}")
+    public String showTicketsByProjectId(@PathVariable String projectId, Model model) {
+        List<Ticket> tickets = ticketRepo.findByProject(projectId);
+        model.addAttribute("tickets", tickets);
+        return "ticketsListView";
     }
 }

@@ -1,20 +1,23 @@
 package ru.saviorium.ticketnitsa.model;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
-@RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Project {
     @Id
-    private final String id;
-    private final String name;
-    private final String description;
+    @NotEmpty
+    @NotNull
+    private String id;
+    private String name;
+    private String description;
 }
