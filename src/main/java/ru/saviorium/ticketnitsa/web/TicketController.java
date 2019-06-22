@@ -29,8 +29,7 @@ public class TicketController {
 
     @GetMapping("/create")
     public String createTicketForm(Model model) {
-        List<Project> projects = new LinkedList<>();
-        projectRepo.findAll().forEach(i -> projects.add(i));
+        List<Project> projects = new LinkedList<>(projectRepo.findAll());
         model.addAttribute("projects", projects);
         model.addAttribute("ticket", new Ticket());
         return "createTicketForm";
@@ -44,12 +43,13 @@ public class TicketController {
         }
         ticketRepo.save(ticket);
 
-        return "redirect:/ticket/show/" + ticket.getProject();
+        return "redirect:/ticket/showall/" + ticket.getProject();
     }
 
-    @GetMapping("/show/{projectId}")
+    @GetMapping("/showall/{projectId}")
     public String showTicketsByProjectId(@PathVariable String projectId, Model model) {
         List<Ticket> tickets = ticketRepo.findByProject(projectId);
+        model.addAttribute("projectid", projectId);
         model.addAttribute("tickets", tickets);
         return "ticketsListView";
     }

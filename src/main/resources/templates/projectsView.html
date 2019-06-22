@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Ticketnitsa</title>
+</head>
+<body>
+<div class="container">
+    <h1>All projects</h1>
+    <ul class="list-group">
+        <li class="list-group-item" th:each="projectItem : ${projects}">
+            <a th:href="'/ticket/showall/' + ${projectItem.id}" class="stretched-link">
+                <h2 th:text="${projectItem.id} + ' - ' + ${projectItem.name}">Project name</h2>
+            </a>
+            <small class="text-muted" th:text="${projectItem.description}">Project description</small>
+        </li>
+    </ul>
+    <a href="/project/create">
+        <button type="button" class="btn btn-primary btn-lg btn-block">New project</button>
+    </a>
+</div>
+</body>
+</html>

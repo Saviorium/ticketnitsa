@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 public class Ticket {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//FIXME: random ids - should start at 1 for each project
     private long id;
     @NotNull
     @NotEmpty

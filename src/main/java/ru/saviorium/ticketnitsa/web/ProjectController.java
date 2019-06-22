@@ -13,13 +13,14 @@ import ru.saviorium.ticketnitsa.dao.ProjectRepository;
 import ru.saviorium.ticketnitsa.model.Project;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Controller
 @RequestMapping("/project")
 public class ProjectController {
     @Autowired
-    ProjectRepository projectRepo;
+    private ProjectRepository projectRepo;
 
     @GetMapping("/create")
     public String projectCreateForm(Model model) {
@@ -35,7 +36,13 @@ public class ProjectController {
         }
         projectRepo.save(project);
 
-        return "redirect:/ticket/show/" + project.getId();
+        return "redirect:/ticket/showall/" + project.getId();
     }
 
+    @GetMapping("/all")
+    public String showAll(Model model) {
+        List<Project> projects = projectRepo.findAll();
+        model.addAttribute("projects", projects);
+        return "projectsView";
+    }
 }
